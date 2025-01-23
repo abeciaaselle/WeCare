@@ -1,51 +1,92 @@
-// src/screens/HeadNurseScreen.js
-import React, { useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
+import NotificationsScreen from './NotificationsScreen';
+import AddPatientScreen from './AddPatientScreen';
+import PatientRecordsScreen from './PatientRecordsScreen';
+import AlarmScreen from './AlarmScreen'; // Import AlarmScreen
+import { View, ImageBackground, StyleSheet } from 'react-native';
 
-const HeadNurseScreen = ({ navigation }) => {
-  const [patients, setPatients] = useState([]);
-  const [medicine, setMedicine] = useState('');
+const Tab = createBottomTabNavigator();
 
-  const fetchPatients = async () => {
-    const storedPatients = await AsyncStorage.getItem('patients');
-    if (storedPatients) {
-      setPatients(JSON.parse(storedPatients));
-    }
-  };
-
-  const editPatient = (index) => {
-    const updatedPatients = [...patients];
-    updatedPatients[index].medicine = medicine;
-    setPatients(updatedPatients);
-  };
-
+const HeadNurseScreen = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Head Nurse Panel</Text>
-      <Button title="Load Patients" onPress={fetchPatients} />
-      {patients.map((patient, index) => (
-        <View key={index} style={styles.patientContainer}>
-          <Text>Patient Name: {patient.name}</Text>
-          <Text>Current Medicine: {patient.medicine}</Text>
-          <TextInput
-            placeholder="Edit Medicine"
-            value={medicine}
-            onChangeText={setMedicine}
-            style={styles.input}
+    <ImageBackground
+      source={require('../../assets/images/Homepage(all).png')} // Professional background image
+      style={styles.background}
+      resizeMode="cover" // Ensures the image stretches correctly
+    >
+      <View style={styles.overlay}>
+        <Tab.Navigator
+          screenOptions={{
+            headerShown: false,
+            tabBarStyle: styles.tabBarStyle, // Custom tab bar style
+            tabBarActiveTintColor: '#5A4FCF', // Active icon color (purple)
+            tabBarInactiveTintColor: '#888', // Inactive icon color (gray)
+            tabBarLabelStyle: styles.tabBarLabel, // Label style for tabs
+          }}
+        >
+          <Tab.Screen
+            name="Notifications"
+            component={NotificationsScreen}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="notifications" color={color} size={size} />
+              ),
+            }}
           />
-          <Button title="Update" onPress={() => editPatient(index)} />
-        </View>
-      ))}
-    </View>
+          <Tab.Screen
+            name="Add Patient"
+            component={AddPatientScreen}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="add-circle" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Patient Records"
+            component={PatientRecordsScreen}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="folder" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Alarm" // New Tab for Alarm
+            component={AlarmScreen}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="alarm" color={color} size={size} />
+              ),
+            }}
+          />
+        </Tab.Navigator>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { padding: 20 },
-  title: { fontSize: 20, marginBottom: 20 },
-  patientContainer: { marginBottom: 15 },
-  input: { borderBottomWidth: 1, marginBottom: 10, padding: 5 },
+  background: {
+    flex: 1,
+    justifyContent: 'center', // Centers the content for a more reflective look
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.6)', // Slightly more opaque overlay for better readability
+  },
+  tabBarStyle: {
+    backgroundColor: '#FFF', // White background for the tab bar
+    borderTopWidth: 0, // Removes the top border for a cleaner look
+    height: 70, // Increased height for better icon visibility
+    paddingBottom: 20, // Padding added to the bottom of the tab bar
+  },
+  tabBarLabel: {
+    fontSize: 10, // Smaller label font size for a minimalistic design
+    fontWeight: 'bold', // Bold labels for improved readability
+  },
 });
 
 export default HeadNurseScreen;

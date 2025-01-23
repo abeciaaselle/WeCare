@@ -1,56 +1,82 @@
-// src/screens/AdminScreen.js
-import React, { useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
-import { Calendar } from 'react-native-calendars';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
+import NotificationsScreen from './NotificationsScreen'; // Import existing NotificationsScreen
+import CalendarScreen from './CalendarScreen';
+import PatientRecordsScreen from './PatientRecordsScreen';
+import { View, ImageBackground, StyleSheet } from 'react-native';
 
-const AdminScreen = ({ navigation }) => {
-  const [patients, setPatients] = useState([]);
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
-  const [medicine, setMedicine] = useState('');
-  const [compartment, setCompartment] = useState('');
+const Tab = createBottomTabNavigator();
 
-  const addPatient = async () => {
-    const newPatient = { name, age, medicine, compartment };
-    const updatedPatients = [...patients, newPatient];
-    setPatients(updatedPatients);
-
-    // Save patients to AsyncStorage
-    await AsyncStorage.setItem('patients', JSON.stringify(updatedPatients));
-
-    setName('');
-    setAge('');
-    setMedicine('');
-    setCompartment('');
-  };
-
+const AdminScreen = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Admin Panel</Text>
-      {patients.map((patient, index) => (
-        <View key={index} style={styles.patientContainer}>
-          <Text>Patient Name: {patient.name}</Text>
-          <Text>Age: {patient.age}</Text>
-          <Text>Medicine: {patient.medicine}</Text>
-          <Text>Compartment: {patient.compartment}</Text>
-        </View>
-      ))}
-      <TextInput placeholder="Patient Name" value={name} onChangeText={setName} style={styles.input} />
-      <TextInput placeholder="Age" value={age} onChangeText={setAge} style={styles.input} keyboardType="numeric" />
-      <TextInput placeholder="Medicine" value={medicine} onChangeText={setMedicine} style={styles.input} />
-      <TextInput placeholder="Compartment" value={compartment} onChangeText={setCompartment} style={styles.input} />
-      <Button title="Add Patient" onPress={addPatient} />
-      <Button title="View Calendar" onPress={() => navigation.navigate('Calendar')} />
-    </View>
+    <ImageBackground
+      source={require('../../assets/images/Homepage(all).png')} // Professional background image
+      style={styles.background}
+      resizeMode="cover" // Ensures the image stretches correctly
+    >
+      <View style={styles.overlay}>
+        <Tab.Navigator
+          screenOptions={{
+            headerShown: false,
+            tabBarStyle: styles.tabBarStyle, // Custom tab bar style
+            tabBarActiveTintColor: '#5A4FCF', // Active icon color (purple)
+            tabBarInactiveTintColor: '#888', // Inactive icon color (gray)
+            tabBarLabelStyle: styles.tabBarLabel, // Label style for tabs
+          }}
+        >
+          <Tab.Screen
+            name="Notifications"
+            component={NotificationsScreen} // Use the existing NotificationsScreen component
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="notifications" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Calendar"
+            component={CalendarScreen}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="calendar" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Records"
+            component={PatientRecordsScreen}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="document-text" color={color} size={size} />
+              ),
+            }}
+          />
+        </Tab.Navigator>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { padding: 20 },
-  title: { fontSize: 20, marginBottom: 20 },
-  patientContainer: { marginBottom: 15 },
-  input: { borderBottomWidth: 1, marginBottom: 10, padding: 5 },
+  background: {
+    flex: 1,
+    justifyContent: 'center', // Centers the content for a more reflective look
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.6)', // Slightly more opaque overlay
+  },
+  tabBarStyle: {
+    backgroundColor: '#FFF', // White background for the tab bar
+    borderTopWidth: 0, // Removes the top border for a cleaner look
+    height: 70, // Increased height for better icon visibility
+    paddingBottom: 20, // Padding added to the bottom of the tab bar
+  },
+  tabBarLabel: {
+    fontSize: 10, // Smaller label font size for a minimalistic design
+    fontWeight: 'bold', // Bold labels for improved readability
+  },
 });
 
 export default AdminScreen;
