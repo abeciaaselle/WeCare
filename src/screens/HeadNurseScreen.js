@@ -7,7 +7,9 @@ import PatientRecordsScreen from './PatientRecordsScreen';
 import AlarmScreen from './AlarmScreen'; // Import AlarmScreen
 import { View, ImageBackground, StyleSheet } from 'react-native';
 
+
 const Tab = createBottomTabNavigator();
+
 
 const HeadNurseScreen = () => {
   return (
@@ -68,6 +70,7 @@ const HeadNurseScreen = () => {
   );
 };
 
+
 const styles = StyleSheet.create({
   background: {
     flex: 1,
@@ -88,5 +91,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold', // Bold labels for improved readability
   },
 });
+
 
 export default HeadNurseScreen;

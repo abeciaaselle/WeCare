@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, Button, StyleSheet, Alert, TouchableOpacity } from 'react-native';
-import axios from 'axios';
+import { View, TextInput, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { patientDatabase, wecareDatabase } from './firebaseConfig';
+import { ref, set } from 'firebase/database';  // Firebase methods
 
 const AddPatientScreen = ({ navigation }) => {
   const [name, setName] = useState('');
@@ -9,13 +10,14 @@ const AddPatientScreen = ({ navigation }) => {
   const [compartment, setCompartment] = useState('');
 
   const addPatientToDB = async () => {
+    const patientId = Date.now().toString(); // Use timestamp as patient ID
+    const patientRef = ref(patientDatabase, 'patients/' + patientId);  // Reference to the patients path in Firebase
+    
     const patient = { name, age, medicine, compartment };
     try {
-      const response = await axios.post('http://10.0.0.38:3000/api/patients', patient);
-      if (response.status === 200) {
-        Alert.alert('Success', 'Patient added successfully!');
-        navigation.goBack();  // Navigate back to the previous screen
-      }
+      await set(patientRef, patient);  // Set patient data in Firebase
+      Alert.alert('Success', 'Patient added successfully!');
+      navigation.goBack();
     } catch (error) {
       Alert.alert('Error', 'Error adding patient!');
       console.error(error);
@@ -25,7 +27,6 @@ const AddPatientScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Add New Patient</Text>
-      
       <TextInput
         placeholder="Patient Name"
         value={name}
@@ -51,7 +52,6 @@ const AddPatientScreen = ({ navigation }) => {
         onChangeText={setCompartment}
         style={styles.input}
       />
-      
       <TouchableOpacity style={styles.addButton} onPress={addPatientToDB}>
         <Text style={styles.addButtonText}>Add Patient</Text>
       </TouchableOpacity>
@@ -64,7 +64,7 @@ const AddPatientScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { 
+  container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

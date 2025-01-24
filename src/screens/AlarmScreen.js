@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Platform, TouchableOpacity, ScrollView } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
+
 const AlarmScreen = () => {
   const [morningTime, setMorningTime] = useState(new Date());
   const [noonTime, setNoonTime] = useState(new Date());
@@ -9,8 +10,10 @@ const AlarmScreen = () => {
   const [showPicker, setShowPicker] = useState(false);
   const [currentAlarm, setCurrentAlarm] = useState('');
 
+
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || new Date();
+
 
     if (event.type === 'set') {
       if (currentAlarm === 'morning') {
@@ -22,24 +25,28 @@ const AlarmScreen = () => {
       }
     }
 
+
     // Close the picker after selecting the time
     setShowPicker(false);
   };
+
 
   // Function to format time in 12-hour format (with AM/PM)
   const format12Hour = (date) => {
     return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
   };
 
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Set Alarms</Text>
 
+
       {/* Morning Alarm */}
       <View style={styles.alarmTimeContainer}>
         <Text style={styles.timeLabel}>Set Morning Alarm</Text>
-        <TouchableOpacity 
-          style={styles.pickTimeButton} 
+        <TouchableOpacity
+          style={styles.pickTimeButton}
           onPress={() => {
             setCurrentAlarm('morning');
             setShowPicker(true); // Show the time picker
@@ -47,17 +54,18 @@ const AlarmScreen = () => {
         >
           <Text style={styles.buttonText}>Pick Morning Time</Text>
         </TouchableOpacity>
-        
+       
         <Text style={styles.selectedTime}>
           {`Morning Time: ${format12Hour(morningTime)}`}
         </Text>
       </View>
 
+
       {/* Noon Alarm */}
       <View style={styles.alarmTimeContainer}>
         <Text style={styles.timeLabel}>Set Noon Alarm</Text>
-        <TouchableOpacity 
-          style={styles.pickTimeButton} 
+        <TouchableOpacity
+          style={styles.pickTimeButton}
           onPress={() => {
             setCurrentAlarm('noon');
             setShowPicker(true); // Show the time picker
@@ -65,17 +73,18 @@ const AlarmScreen = () => {
         >
           <Text style={styles.buttonText}>Pick Noon Time</Text>
         </TouchableOpacity>
-        
+       
         <Text style={styles.selectedTime}>
           {`Noon Time: ${format12Hour(noonTime)}`}
         </Text>
       </View>
 
+
       {/* Evening Alarm */}
       <View style={styles.alarmTimeContainer}>
         <Text style={styles.timeLabel}>Set Evening Alarm</Text>
-        <TouchableOpacity 
-          style={styles.pickTimeButton} 
+        <TouchableOpacity
+          style={styles.pickTimeButton}
           onPress={() => {
             setCurrentAlarm('evening');
             setShowPicker(true); // Show the time picker
@@ -83,11 +92,12 @@ const AlarmScreen = () => {
         >
           <Text style={styles.buttonText}>Pick Evening Time</Text>
         </TouchableOpacity>
-        
+       
         <Text style={styles.selectedTime}>
           {`Evening Time: ${format12Hour(eveningTime)}`}
         </Text>
       </View>
+
 
       {/* Show DateTimePicker */}
       {showPicker && (
@@ -101,6 +111,7 @@ const AlarmScreen = () => {
         />
       )}
 
+
       {/* Save Button */}
       <TouchableOpacity style={styles.saveButton} onPress={() => alert("Alarms set!")}>
         <Text style={styles.saveButtonText}>Save Alarms</Text>
@@ -108,6 +119,7 @@ const AlarmScreen = () => {
     </ScrollView>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -180,5 +192,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
 
 export default AlarmScreen;

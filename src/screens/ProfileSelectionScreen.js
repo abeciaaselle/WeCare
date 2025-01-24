@@ -2,12 +2,14 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
+
 const ProfileSelectionScreen = ({ navigation }) => {
   const profiles = [
     { name: 'Admin', icon: 'person-circle' },
     { name: 'Head Nurse', icon: 'medkit' },
     { name: 'Staff', icon: 'people-circle' },
   ];
+
 
   return (
     <ImageBackground
@@ -32,6 +34,7 @@ const ProfileSelectionScreen = ({ navigation }) => {
     </ImageBackground>
   );
 };
+
 
 const styles = StyleSheet.create({
   background: {
@@ -80,5 +83,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
 
 export default ProfileSelectionScreen;

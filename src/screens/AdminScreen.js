@@ -6,7 +6,9 @@ import CalendarScreen from './CalendarScreen';
 import PatientRecordsScreen from './PatientRecordsScreen';
 import { View, ImageBackground, StyleSheet } from 'react-native';
 
+
 const Tab = createBottomTabNavigator();
+
 
 const AdminScreen = () => {
   return (
@@ -58,6 +60,7 @@ const AdminScreen = () => {
   );
 };
 
+
 const styles = StyleSheet.create({
   background: {
     flex: 1,
@@ -78,5 +81,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold', // Bold labels for improved readability
   },
 });
+
 
 export default AdminScreen;

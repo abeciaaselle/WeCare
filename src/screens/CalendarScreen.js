@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { ref, onValue } from 'firebase/database';
-import { database } from './firebaseConfig'; // Adjust the path as needed
+import { wecareDatabase } from './firebaseConfig'; // Adjust the path as needed
+
 
 const CalendarScreen = () => {
   const [notifications, setNotifications] = useState({});
-  
+ 
   // Fetch notifications from Firebase
   useEffect(() => {
-    const notificationsRef = ref(database, 'notifications');
+    const notificationsRef = ref(wecareDatabase, 'notifications');
     onValue(notificationsRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
@@ -29,6 +30,7 @@ const CalendarScreen = () => {
     });
   }, []);
 
+
   const handleDayPress = (day) => {
     const selectedDate = day.dateString; // Get the selected date as a string (e.g., '2024-10-15')
     if (notifications[selectedDate]) {
@@ -42,6 +44,7 @@ const CalendarScreen = () => {
       Alert.alert(`Notifications`, `No notifications for ${selectedDate}`);
     }
   };
+
 
   return (
     <View style={styles.container}>
@@ -59,9 +62,11 @@ const CalendarScreen = () => {
   );
 };
 
+
 const styles = StyleSheet.create({
   container: { padding: 20 },
   title: { fontSize: 20, marginBottom: 20 },
 });
+
 
 export default CalendarScreen;

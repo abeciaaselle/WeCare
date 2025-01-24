@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 
+
 const LandingPage = ({ navigation }) => {
   useEffect(() => {
     // Navigate to ProfileSelection after 3 seconds
@@ -8,9 +9,11 @@ const LandingPage = ({ navigation }) => {
       navigation.navigate('ProfileSelection');
     }, 3000);
 
+
     // Cleanup the timer
     return () => clearTimeout(timer);
   }, [navigation]);
+
 
   return (
     <View style={styles.container}>
@@ -21,6 +24,7 @@ const LandingPage = ({ navigation }) => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -36,4 +40,7 @@ const styles = StyleSheet.create({
   },
 });
 
+
 export default LandingPage;
+
+

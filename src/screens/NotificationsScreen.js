@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { ref, onValue } from 'firebase/database';
-import { database } from './firebaseConfig'; // Adjust the path as needed
+import { wecareDatabase } from './firebaseConfig';
 
 const NotificationsScreen = () => {
   const [notifications, setNotifications] = useState({});
 
+
   useEffect(() => {
-    const notificationsRef = ref(database, 'notifications');
+    const notificationsRef = ref(wecareDatabase, 'notifications');
     onValue(notificationsRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
@@ -23,6 +24,7 @@ const NotificationsScreen = () => {
       }
     });
   }, []);
+
 
   return (
     <ScrollView style={{ flex: 1, padding: 10 }}>
@@ -52,6 +54,7 @@ const NotificationsScreen = () => {
   );
 };
 
+
 // Helper function to format the notification ID as a date
 const formatDate = (notificationId) => {
   const date = new Date(notificationId); // Convert notification ID to Date object
@@ -61,6 +64,7 @@ const formatDate = (notificationId) => {
   }
   return date.toDateString(); // Converts to a readable date (e.g., "Wed Jan 15 2025")
 };
+
 
 const styles = StyleSheet.create({
   dayContainer: {
@@ -106,5 +110,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
+
 
 export default NotificationsScreen;

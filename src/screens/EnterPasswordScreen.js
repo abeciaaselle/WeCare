@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, ImageBackground } from 'react-native';
 
+
 const defaultPasswords = {
   Admin: 'admin123',
   'Head Nurse': 'hn123',
   Staff: 'staff123',
 };
 
+
 const EnterPasswordScreen = ({ route, navigation }) => {
   const { profile } = route.params;
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
 
   const handlePasswordSubmit = () => {
     if (password === defaultPasswords[profile]) {
@@ -19,6 +22,7 @@ const EnterPasswordScreen = ({ route, navigation }) => {
       setError('Incorrect password');
     }
   };
+
 
   return (
     <ImageBackground
@@ -45,6 +49,7 @@ const EnterPasswordScreen = ({ route, navigation }) => {
     </ImageBackground>
   );
 };
+
 
 const styles = StyleSheet.create({
   background: {
@@ -97,5 +102,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+
 
 export default EnterPasswordScreen;

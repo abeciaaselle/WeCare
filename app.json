@@ -19,10 +19,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/WecareLogo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.aselle.WeCare"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "81ef86c2-80ef-4445-aed7-060dea38f08a"
+      }
     }
   }
 }

@@ -5,7 +5,9 @@ import NotificationsScreen from './NotificationsScreen';
 import PatientRecordsScreen from './PatientRecordsScreen';
 import { View, ImageBackground, StyleSheet } from 'react-native';
 
+
 const Tab = createBottomTabNavigator();
+
 
 const StaffScreen = () => {
   return (
@@ -48,6 +50,7 @@ const StaffScreen = () => {
   );
 };
 
+
 const styles = StyleSheet.create({
   background: {
     flex: 1,
@@ -69,4 +72,8 @@ const styles = StyleSheet.create({
   },
 });
 
+
 export default StaffScreen;
+
+
+

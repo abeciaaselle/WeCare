@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, ImageBackground } from 'react-native';
 
+
 const PasswordRecoveryScreen = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
   const [isCodeSent, setIsCodeSent] = useState(false);
+
 
   const handleSendCode = () => {
     if (phoneNumber) {
@@ -13,15 +15,17 @@ const PasswordRecoveryScreen = ({ navigation }) => {
     }
   };
 
+
   const handleVerifyCode = () => {
     if (verificationCode) {
       navigation.navigate('EnterPassword', { profile: 'Admin' }); // Navigate back to password screen after recovery
     }
   };
 
+
   return (
     <ImageBackground
-      source={require('../../assets/images/Login.png')} 
+      source={require('../../assets/images/Login.png')}
       style={styles.background}
     >
       <View style={styles.container}>
@@ -57,6 +61,7 @@ const PasswordRecoveryScreen = ({ navigation }) => {
     </ImageBackground>
   );
 };
+
 
 const styles = StyleSheet.create({
   background: {
@@ -99,5 +104,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
+
 
 export default PasswordRecoveryScreen;

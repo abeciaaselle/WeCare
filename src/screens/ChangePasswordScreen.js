@@ -2,11 +2,13 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
 
+
 const ChangePasswordScreen = ({ route, navigation }) => {
   const { profile } = route.params;
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+
 
   const handleChangePassword = () => {
     if (newPassword === confirmPassword) {
@@ -16,6 +18,7 @@ const ChangePasswordScreen = ({ route, navigation }) => {
       setError('Passwords do not match');
     }
   };
+
 
   return (
     <View style={styles.container}>
@@ -40,11 +43,13 @@ const ChangePasswordScreen = ({ route, navigation }) => {
   );
 };
 
+
 const styles = StyleSheet.create({
   container: { padding: 20 },
   title: { fontSize: 20, marginBottom: 20 },
   input: { borderBottomWidth: 1, marginBottom: 10, padding: 5 },
   error: { color: 'red' },
 });
+
 
 export default ChangePasswordScreen;
